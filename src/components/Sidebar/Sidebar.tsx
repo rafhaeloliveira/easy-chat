@@ -1,3 +1,4 @@
+import { useState } from "react";
 import People from "../People/People";
 import { Perfil } from "../Perfil";
 import {
@@ -7,6 +8,8 @@ import {
 } from "./Sidebar-styled";
 
 const Sidebar = () => {
+  const [chatList, setChatList] = useState([]);
+
   return (
     <>
       <SidebarContainer>
@@ -14,18 +17,9 @@ const Sidebar = () => {
           <Perfil />
         </SidebarUserInfo>
         <SidebarContatosList>
-          <li>
+          {chatList?.map((user) => (
             <People />
-          </li>
-          <li>
-            <People />
-          </li>
-          <li>
-            <People />
-          </li>
-          <li>
-            <People />
-          </li>
+          ))}
         </SidebarContatosList>
       </SidebarContainer>
     </>

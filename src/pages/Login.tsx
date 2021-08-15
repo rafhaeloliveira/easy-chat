@@ -29,10 +29,6 @@ const Login = () => {
     setName(e.target.value);
   };
 
-  useEffect(() => {
-    console.log("profile =>", profile);
-  }, [profile]);
-
   return (
     <Container component="form" onSubmit={setProfileInfo}>
       <Grid

@@ -20,6 +20,9 @@ export const SidebarUserInfo = styled.div`
 
 export const SidebarContatosList = styled.ul`
   width: 100%;
+  height: calc(100% - 180px);
+
+  overflow: auto;
 
   li {
     border-top: 1px solid #e5e5e5;

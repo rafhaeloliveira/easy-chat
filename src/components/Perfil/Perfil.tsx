@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { ProfileContext } from "../../context/profile-provider";
 import {
   PerfilContainer,
   PerfilImg,
@@ -6,10 +8,12 @@ import {
 } from "./Perfil-styled";
 
 const Perfil = () => {
+  const { profile }: any = useContext(ProfileContext);
+
   return (
     <PerfilContainer>
-      <PerfilImg />
-      <PerfilName>Rafhael Oliveira</PerfilName>
+      <PerfilImg src={profile.image} />
+      <PerfilName>{profile.user}</PerfilName>
       <PerfilLogout>sair</PerfilLogout>
     </PerfilContainer>
   );

@@ -5,8 +5,8 @@ import {
   BrowserRouter as Router,
   Redirect,
 } from "react-router-dom";
-// import { io } from "socket.io-client";
 import { ProfileContext, ProfileProvider } from "./context/profile-provider";
+import { ChatSocketProvider } from "./context/socket-provider";
 import ChatRoom from "./pages/ChatRoom";
 import Login from "./pages/Login";
 
@@ -21,22 +21,16 @@ const ProtectedRoute = ({ component, exact, path }: any) => {
 };
 
 const App: FC<any> = () => {
-  // const socket = io("http://localhost:3001", {
-  //   reconnectionDelayMax: 10000,
-  // });
-
-  // useEffect(() => {
-  //   console.log("socket =>", socket);
-  // }, []);
-
   return (
     <Router>
       <div className="main-container">
         <ProfileProvider>
-          <Switch>
-            <ProtectedRoute path="/" exact component={ChatRoom} />
-            <Route path="/login" exact component={Login} />
-          </Switch>
+          <ChatSocketProvider>
+            <Switch>
+              <ProtectedRoute path="/" exact component={ChatRoom} />
+              <Route path="/login" exact component={Login} />
+            </Switch>
+          </ChatSocketProvider>
         </ProfileProvider>
       </div>
     </Router>
