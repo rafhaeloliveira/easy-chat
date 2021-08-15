@@ -22,7 +22,6 @@ export const SidebarContatosList = styled.ul`
   width: 100%;
 
   li {
-    padding: 10px 20px;
     border-top: 1px solid #e5e5e5;
 
     &:last-child {

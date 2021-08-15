@@ -1,3 +1,4 @@
+import People from "../People/People";
 import { Perfil } from "../Perfil";
 import {
   SidebarContainer,
@@ -13,10 +14,18 @@ const Sidebar = () => {
           <Perfil />
         </SidebarUserInfo>
         <SidebarContatosList>
-          <li>Contato 1</li>
-          <li>Contato 2</li>
-          <li>Contato 3</li>
-          <li>Contato 4</li>
+          <li>
+            <People />
+          </li>
+          <li>
+            <People />
+          </li>
+          <li>
+            <People />
+          </li>
+          <li>
+            <People />
+          </li>
         </SidebarContatosList>
       </SidebarContainer>
     </>
