@@ -1,3 +1,4 @@
+import { Perfil } from "../Perfil";
 import {
   SidebarContainer,
   SidebarContatosList,
@@ -9,9 +10,7 @@ const Sidebar = () => {
     <>
       <SidebarContainer>
         <SidebarUserInfo>
-          <h3>User</h3>
-          <h4>Rafhael</h4>
-          <span>sair</span>
+          <Perfil />
         </SidebarUserInfo>
         <SidebarContatosList>
           <li>Contato 1</li>
