@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const MessagesContainer = styled.div`
   width: 100%;
   height: calc(100vh - 76px);
-  background-color: #fff;
+  background-color: #efefef;
   padding: 10px;
 `;
 
@@ -16,8 +16,10 @@ export const MessagesList = styled.ul`
   display: flex;
   flex-direction: column;
 
-  background-color: #efefef;
   padding: 10px;
+
+  margin-top: 10px;
+  margin-bottom: 50px;
 `;
 
 export const MessageBalloon: any = styled.li`

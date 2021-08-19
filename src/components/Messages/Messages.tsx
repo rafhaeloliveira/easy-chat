@@ -1,4 +1,5 @@
-import { FC } from "react";
+import { FC, useContext, useState } from "react";
+import { ChatSocketContext } from "../../context/socket-provider";
 import {
   MessageBalloon,
   MessagesContainer,
@@ -6,11 +7,20 @@ import {
 } from "./Messages-styled";
 
 const Messages: FC = () => {
+  const { socket }: any = useContext(ChatSocketContext);
+
+  const [chat, setChat]: any = useState([]);
+
+  socket.on("chat message", (msg: any) => {
+    const newChat = chat || [];
+    newChat.push(msg);
+    setChat([...newChat]);
+  });
+
   return (
     <MessagesContainer>
       <MessagesList>
-        <MessageBalloon mine>Abc</MessageBalloon>
-        <MessageBalloon>Abc</MessageBalloon>
+        {chat && chat.map((msg: any) => <MessageBalloon>{msg}</MessageBalloon>)}
       </MessagesList>
     </MessagesContainer>
   );

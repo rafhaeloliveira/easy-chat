@@ -25,8 +25,28 @@ app.get("/", (req, res) => {
   res.send("<h1>Hello world</h1>");
 });
 
+let connectedUsers = [];
 io.on("connection", (socket) => {
-  console.log("a user connected");
+  console.log("a user connected", socket.id);
+
+  connectedUsers.push(socket.id);
+
+  socket.on("chat message", (msg) => {
+    io.emit("chat message", msg);
+  });
+
+  // On disconnect
+  socket.on("disconnected", () => {
+    const newList = [];
+
+    connectedUsers.map((user) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      user.id === socket.id ? null : newList.push(user);
+    });
+
+    console.log("user disconnected");
+    socket.removeAllListeners();
+  });
 });
 
 server.listen(port, () => {

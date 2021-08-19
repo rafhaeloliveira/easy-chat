@@ -24,14 +24,14 @@ const App: FC<any> = () => {
   return (
     <Router>
       <div className="main-container">
-        <ProfileProvider>
-          <ChatSocketProvider>
+        <ChatSocketProvider>
+          <ProfileProvider>
             <Switch>
               <ProtectedRoute path="/" exact component={ChatRoom} />
               <Route path="/login" exact component={Login} />
             </Switch>
-          </ChatSocketProvider>
-        </ProfileProvider>
+          </ProfileProvider>
+        </ChatSocketProvider>
       </div>
     </Router>
   );
