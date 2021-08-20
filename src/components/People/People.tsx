@@ -1,10 +1,12 @@
 import { PeopleContainer, PeopleImage, PeopleName } from "./People-styled";
 
-const People = () => {
+const People = (props: any) => {
+  const { user } = props;
+
   return (
     <PeopleContainer>
       <PeopleImage />
-      <PeopleName>Rafhael Oliveira</PeopleName>
+      <PeopleName>{user.username || "Usuário"}</PeopleName>
     </PeopleContainer>
   );
 };

@@ -2,11 +2,13 @@ import { Button, Container, Grid, Paper, TextField } from "@material-ui/core";
 import { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ProfileContext } from "../context/profile-provider";
+import { ChatSocketContext } from "../context/socket-provider";
 
 const Login = () => {
   const history = useHistory();
 
   const { profile, saveProfile }: any = useContext(ProfileContext);
+  const { socket }: any = useContext(ChatSocketContext);
 
   const [name, setName] = useState();
 
@@ -19,6 +21,9 @@ const Login = () => {
     };
 
     saveProfile(newProfile);
+
+    socket.auth = { username: name };
+    socket.connect();
 
     if (name) {
       history.push("/");

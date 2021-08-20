@@ -13,7 +13,6 @@ const Messages: FC = () => {
 
   socket.on("chat message", (msg: any) => {
     const newChat = chat || [];
-    newChat.push(msg);
     setChat([...newChat]);
   });
 

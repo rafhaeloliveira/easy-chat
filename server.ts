@@ -25,28 +25,50 @@ app.get("/", (req, res) => {
   res.send("<h1>Hello world</h1>");
 });
 
-let connectedUsers = [];
 io.on("connection", (socket) => {
+  let users = [];
   console.log("a user connected", socket.id);
 
-  connectedUsers.push(socket.id);
+  for (let [id, socket] of io.of("/").sockets) {
+    users.push({
+      userId: id,
+      username: socket.username,
+    });
+  }
 
+  // On events
   socket.on("chat message", (msg) => {
     io.emit("chat message", msg);
   });
 
-  // On disconnect
-  socket.on("disconnected", () => {
-    const newList = [];
+  // emit
+  socket.emit("users", users);
 
-    connectedUsers.map((user) => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      user.id === socket.id ? null : newList.push(user);
+  // broadcast
+  socket.broadcast.emit("users", users);
+
+  // On disconnect
+  socket.on("disconnect", () => {
+    const newUsers = [];
+
+    users.map((user) => {
+      if (user.userId !== socket.id) {
+        newUsers.push(user);
+      }
     });
 
-    console.log("user disconnected");
-    socket.removeAllListeners();
+    users = newUsers;
+    socket.broadcast.emit("users", users);
   });
+});
+
+io.use((socket, next) => {
+  const username = socket.handshake.auth.username;
+  if (!username) {
+    return next(new Error("Invalid username"));
+  }
+  socket.username = username;
+  next();
 });
 
 server.listen(port, () => {

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { ChatSocketContext } from "../../context/socket-provider";
 import People from "../People/People";
 import { Perfil } from "../Perfil";
 import {
@@ -8,7 +9,17 @@ import {
 } from "./Sidebar-styled";
 
 const Sidebar = () => {
-  const [chatList, setChatList] = useState([]);
+  const [usersList, setUsersList]: any = useState([]);
+
+  const { socket }: any = useContext(ChatSocketContext);
+
+  useEffect(() => {
+    socket.on("users", (users: any) => {
+      const newUsers = users || [];
+
+      setUsersList(newUsers);
+    });
+  }, []);
 
   return (
     <>
@@ -17,8 +28,8 @@ const Sidebar = () => {
           <Perfil />
         </SidebarUserInfo>
         <SidebarContatosList>
-          {chatList?.map((user) => (
-            <People />
+          {usersList?.map((user: any): any => (
+            <People key={user.userId} user={user} />
           ))}
         </SidebarContatosList>
       </SidebarContainer>

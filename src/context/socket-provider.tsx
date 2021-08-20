@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
 const defaultChat = {
@@ -7,26 +7,36 @@ const defaultChat = {
 
 export const ChatSocketContext = React.createContext({});
 
-export const ChatSocketProvider = ({ children, chat }: any) => {
+export const ChatSocketProvider = ({ children, chat, users }: any) => {
+  const [socket, setSocket]: any = useState();
   const [currentChat, setCurrentChat] = useState(chat || defaultChat);
 
-  const socket = io("http://192.168.1.4:3001", {
-    reconnectionDelayMax: 10000,
-  });
+  useEffect(() => {
+    const newSocket = io("http://192.168.1.4:3001", {
+      reconnectionDelay: 10000,
+      autoConnect: false,
+    });
 
-  console.log("socket =>", socket);
+    newSocket.on("chat message", (msg) => {
+      const newCurrentChat = currentChat;
 
-  socket.on("chat message", (msg) => {
-    const newCurrentChat = currentChat;
+      newCurrentChat?.list.push(msg || "Server msg error!");
 
-    newCurrentChat?.list.push(msg || "Server msg error!");
+      setCurrentChat(newCurrentChat);
+    });
 
-    setCurrentChat(newCurrentChat);
-  });
+    setSocket(newSocket);
+  }, []);
 
   return (
-    <ChatSocketContext.Provider value={{ socket: socket, chat: currentChat }}>
-      {children}
-    </ChatSocketContext.Provider>
+    <>
+      {socket && (
+        <ChatSocketContext.Provider
+          value={{ socket: socket, chat: currentChat }}
+        >
+          {children}
+        </ChatSocketContext.Provider>
+      )}
+    </>
   );
 };
