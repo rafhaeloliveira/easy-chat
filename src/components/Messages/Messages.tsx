@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import { ChatSocketContext } from "../../context/socket-provider";
 import {
   MessageBalloon,
@@ -11,15 +11,25 @@ const Messages: FC = () => {
 
   const [chat, setChat]: any = useState([]);
 
-  socket.on("chat message", (msg: any) => {
-    const newChat = chat || [];
-    setChat([...newChat]);
-  });
+  useEffect(() => {
+    socket.on("chat message", (message: any) => {
+      const newChat = chat || [];
+
+      newChat.push(message);
+
+      setChat([...newChat]);
+    });
+  }, []);
 
   return (
     <MessagesContainer>
       <MessagesList>
-        {chat && chat.map((msg: any) => <MessageBalloon>{msg}</MessageBalloon>)}
+        {chat &&
+          chat.map((msg: any) => (
+            <MessageBalloon mine={socket.id === msg.who}>
+              {msg.text}
+            </MessageBalloon>
+          ))}
       </MessagesList>
     </MessagesContainer>
   );

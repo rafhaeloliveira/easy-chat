@@ -21,10 +21,6 @@ const port = 3001;
 
 app.set("port", port);
 
-app.get("/", (req, res) => {
-  res.send("<h1>Hello world</h1>");
-});
-
 io.on("connection", (socket) => {
   let users = [];
   console.log("a user connected", socket.id);
@@ -38,7 +34,12 @@ io.on("connection", (socket) => {
 
   // On events
   socket.on("chat message", (msg) => {
-    io.emit("chat message", msg);
+    const message = {
+      who: socket.id,
+      text: msg,
+    };
+
+    io.emit("chat message", message);
   });
 
   // emit
