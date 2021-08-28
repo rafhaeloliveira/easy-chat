@@ -35,7 +35,8 @@ io.on("connection", (socket) => {
   // On events
   socket.on("chat message", (msg) => {
     const message = {
-      who: socket.id,
+      who_id: socket.id,
+      who_name: users.filter((user) => user.userId === socket.id)[0].username,
       text: msg,
     };
 

@@ -24,6 +24,18 @@ export const MessagesList = styled.ul`
 
 export const MessageBalloon: any = styled.li`
   max-width: 50%;
+
+  margin-bottom: 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  ${(props: any) => `
+    ${props.mine ? "margin-left: auto" : "margin-right: auto"};
+  `}
+`;
+
+export const MessageBalloonText: any = styled.p`
   padding: 10px 20px;
 
   border-radius: 4px;
@@ -31,10 +43,17 @@ export const MessageBalloon: any = styled.li`
   background-color: #62d062;
   color: #fff;
 
-  margin-bottom: 20px;
-
   ${(props: any) => `
     background-color: ${props.mine ? "#62d062" : "#5f99e2"};
-    ${props.mine ? "margin-left: auto" : "margin-right: auto"};
+  `}
+`;
+
+export const MessageBalloonAuthor: any = styled.span`
+  font-size: 10px;
+  color: #4c4c4c;
+  margin-top: 3px;
+
+  ${(props: any) => `
+    margin-left: ${props.mine ? "auto" : "0"};
   `}
 `;
