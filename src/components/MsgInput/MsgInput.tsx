@@ -1,21 +1,22 @@
 import { IconButton, TextField } from "@material-ui/core";
 import { Send } from "@material-ui/icons";
-import { FC, useContext, useEffect, useState } from "react";
+import { ChangeEvent, FC, FormEvent, useContext, useState } from "react";
 import { ChatSocketContext } from "../../context/socket-provider";
+import { SocketContextProps } from "../../models/socket-context.models";
 import { MsgInputContainer } from "./MsgInput-styled";
 
 const MsgInput: FC = () => {
-  const { socket, chat }: any = useContext(ChatSocketContext);
+  const { socket } = useContext(ChatSocketContext) as SocketContextProps;
 
   const [msg, setMsg] = useState("");
 
-  const submitMsg = (e: any) => {
+  const submitMsg = (e: FormEvent<EventTarget>) => {
     e.preventDefault();
     setMsg("");
     socket.emit("chat message", msg);
   };
 
-  const handleMsg = (e: any) => {
+  const handleMsg = (e: ChangeEvent<HTMLInputElement>) => {
     setMsg(e.target.value);
   };
 

@@ -1,21 +1,27 @@
 import { Button, Container, Grid, Paper, TextField } from "@material-ui/core";
-import { useContext, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ProfileContext } from "../context/profile-provider";
 import { ChatSocketContext } from "../context/socket-provider";
+import {
+  ProfileContextProps,
+  ProfileProps,
+} from "../models/profile-context.models";
+import { SocketContextProps } from "../models/socket-context.models";
 
 const Login = () => {
   const history = useHistory();
 
-  const { profile, saveProfile }: any = useContext(ProfileContext);
-  const { socket }: any = useContext(ChatSocketContext);
+  const { profile, saveProfile }: ProfileContextProps =
+    useContext(ProfileContext);
+  const { socket } = useContext(ChatSocketContext) as SocketContextProps;
 
-  const [name, setName] = useState();
+  const [name, setName] = useState("");
 
-  const setProfileInfo = (e: any) => {
+  const setProfileInfo = (e: FormEvent<EventTarget>) => {
     e.preventDefault();
 
-    const newProfile = {
+    const newProfile: ProfileProps = {
       ...profile,
       user: name,
     };
@@ -30,7 +36,7 @@ const Login = () => {
     }
   };
 
-  const handleName = (e: any) => {
+  const handleName = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
 

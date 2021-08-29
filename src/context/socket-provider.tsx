@@ -26,6 +26,7 @@ export const ChatSocketProvider = ({ children, chat, users }: any) => {
     });
 
     setSocket(newSocket);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

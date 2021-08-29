@@ -1,6 +1,8 @@
 import { useContext } from "react";
 import { ProfileContext } from "../../context/profile-provider";
 import { ChatSocketContext } from "../../context/socket-provider";
+import { ProfileContextProps } from "../../models/profile-context.models";
+import { SocketContextProps } from "../../models/socket-context.models";
 import {
   PerfilContainer,
   PerfilImg,
@@ -9,8 +11,9 @@ import {
 } from "./Perfil-styled";
 
 const Perfil = () => {
-  const { profile, saveProfile }: any = useContext(ProfileContext);
-  const { socket }: any = useContext(ChatSocketContext);
+  const { profile, saveProfile }: ProfileContextProps =
+    useContext(ProfileContext);
+  const { socket } = useContext(ChatSocketContext) as SocketContextProps;
 
   const callLogout = () => {
     socket.disconnect();

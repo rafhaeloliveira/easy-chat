@@ -1,8 +1,12 @@
+import { FC } from "react";
+import { UsersProps } from "../../models/socket-context.models";
 import { PeopleContainer, PeopleImage, PeopleName } from "./People-styled";
 
-const People = (props: any) => {
-  const { user } = props;
+interface PeopleInterface {
+  user: UsersProps;
+}
 
+const People: FC<PeopleInterface> = ({ user }) => {
   return (
     <PeopleContainer>
       <PeopleImage />

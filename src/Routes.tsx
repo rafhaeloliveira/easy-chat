@@ -4,14 +4,16 @@ import {
   Switch,
   BrowserRouter as Router,
   Redirect,
+  RouteProps,
 } from "react-router-dom";
 import { ProfileContext, ProfileProvider } from "./context/profile-provider";
 import { ChatSocketProvider } from "./context/socket-provider";
+import { ProfileContextProps } from "./models/profile-context.models";
 import ChatRoom from "./pages/ChatRoom";
 import Login from "./pages/Login";
 
-const ProtectedRoute = ({ component, exact, path }: any) => {
-  const { profile }: any = useContext(ProfileContext);
+const ProtectedRoute: FC<RouteProps> = ({ component, exact, path }) => {
+  const { profile }: ProfileContextProps = useContext(ProfileContext);
 
   return profile.user ? (
     <Route path={path} component={component} exact={exact} />
@@ -20,7 +22,7 @@ const ProtectedRoute = ({ component, exact, path }: any) => {
   );
 };
 
-const App: FC<any> = () => {
+const App: FC = () => {
   return (
     <Router>
       <div className="main-container">
